@@ -1,0 +1,85 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+    background-color: lightgray;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+nav {
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    background-color: white;
+}
+
+nav .itm {
+    height: 60px;
+    display: inline-block;
+    text-align: center;
+    padding: 0px 22px 0px 22px;
+    line-height: 60px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+nav .itm:active {
+    color: #6c6b6f;
+}
+
+nav .itm.right {
+    float: right;
+}
+
+nav .itm.login {
+    background: #1565C0;
+    color: white;
+    margin-right: 40px;
+}
+
+nav .itm.login:hover {
+    background-color: #1976D2;
+}
+
+nav .itm.logo {
+    font-weight: bold;
+    color: black;
+}
+
+main {
+    padding-top: 60px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-bottom: 60px;
+}
+
+div#main-wrapper {
+    max-width: 1600px;
+    margin: auto
+}
+
+.error-zone {
+    color: darkred;
+}
+
+.form-container {
+    width: 800px;
+    padding: 40px 30px 40px 30px;
+    background-color: white;
+    border-radius: 4px;
+    margin: auto;
+}

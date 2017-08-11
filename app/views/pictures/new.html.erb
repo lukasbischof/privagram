@@ -1,0 +1,12 @@
+<div class="form-container">
+    <h1>Upload</h1>
+
+    <br />
+    <div class="form-group">
+        <%= form_for [current_user, current_user.pictures.build] do |f| %>
+            <%= f.file_field :picture %>
+            <br />
+            <%= f.submit 'Upload file', class: 'btn btn-primary' %>
+        <% end %>
+    </div>
+</div>

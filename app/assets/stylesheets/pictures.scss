@@ -1,0 +1,38 @@
+// Place all the styles related to the pictures controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.image-presenter img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+.image-presenter {
+    text-align: center;
+}
+
+.comments-panel {
+    margin-top: 50px;
+}
+
+.comment-area {
+    margin-top: 20px;
+}
+
+.votes-count {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.votes-count::after {
+    content: "Upvotes"
+}
+
+.votes-count.neg {
+    color: red;
+}
+
+.votes-count.neg::after {
+    content: "Downvotes"
+}

@@ -1,0 +1,124 @@
+<% provide(:title, "Detail") %>
+
+<div class="image-presenter">
+    <%= image_tag "/uploads/#{@picture.path}" %>
+</div>
+
+<br />
+
+<div class="col-md-8">
+    <div class="panel panel-primary comments-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Comments</h3>
+        </div>
+        <div class="panel-body">
+            <div class="comment-area">
+                <div class="form-group">
+                    <%= form_for [current_user, @picture, @picture.comments.build] do |f| %>
+                        <%= f.label :content %>
+                        <%= f.text_area :content, class: 'form-control' %>
+
+                        <br />
+                        <%= f.submit "Save comment", class: 'btn btn-default' %>
+                    <% end %>
+                </div>
+
+                <br />
+                <h3>Other comments</h3>
+
+                <% @picture.comments.each do |c| %>
+                    <% if c.user != nil %>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>
+                                    <strong><%= c.user.username %></strong>
+                                    <strong> on <%= c.created_at %>:</strong>
+                                </p>
+                                <p><%= c.content %></p>
+                                <p>
+                                    <% if c.user == current_user or p.user == current_user %>
+                                        <br />
+                                        <%= link_to('Delete comment', {
+                                            :action=>"destroy",
+                                            :controller=>"comments",
+                                            :id=>"#{c.id}",
+                                            :user_id=>"#{c.user.id}",
+                                            :picture_id=>"#{@picture.id}"
+                                        }, class: 'btn btn-danger', method: :delete) %>
+                                    <% end %>
+                                </p>
+                            </div>
+                        </div>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="panel panel-primary comments-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Votes</h3>
+        </div>
+        <div class="panel-body">
+            <div class="vote-area">
+                <%
+                    disabled_class = @alreadyVoted ? 'disabled' : ''
+                    votes_count_class = @votes_count.negative? ? 'neg' : ''
+                %>
+                <%= link_to({
+                        :action=>"create",
+                        :controller=>"votes",
+                        :user_id=>"#{current_user.id}",
+                        :picture_id=>"#{@picture.id}",
+                        :vote => {
+                            type: 1
+                        }
+                    }, class: "btn btn-default #{disabled_class}", method: :post) do  %>
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                <% end %>
+
+                <%= link_to({
+                        :action=>"create",
+                        :controller=>"votes",
+                        :user_id=>"#{current_user.id}",
+                        :picture_id=>"#{@picture.id}",
+                        :vote => {
+                            type: -1
+                        }
+                    }, class: "btn btn-default #{disabled_class}", method: :post) do  %>
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                <% end %>
+
+                <span class="votes-count <%= votes_count_class %>">
+                    <%= @votes_count.abs %>
+                </span>
+            </div>
+
+            <br />
+            <div>
+                <% @picture.votes.each do |v| %>
+                    <p><b><%= v.user.username %></b> gave <%= v.vote_type.to_i.positive? ? 'an upvote' : 'a downvote' %></p>
+                <% end %>
+            </div>
+        </div>
+    </div>
+
+    <% if @is_owner %>
+        <div class="panel panel-danger comments-panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Control</h3>
+            </div>
+            <div class="panel-body">
+                <%= link_to('Delete this picture', {
+                        :action=>"destroy",
+                        :controller=>"pictures",
+                        :user_id=>"#{@picture.user.id}",
+                        :id=>"#{@picture.id}",
+                    }, class: "btn btn-danger",
+                    method: :delete, data: { confirm: "Do you really want to delete this picture?" })  %>
+            </div>
+        </div>
+    <% end %>
+</div>

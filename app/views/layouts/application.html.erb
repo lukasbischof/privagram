@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Privagram | <%= yield(:title) %></title>
+    <%= csrf_meta_tags %>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav>
+        <%= link_to(root_path) do %>
+            <div class="itm logo">Privagram</div>
+        <% end %>
+
+        <% if current_user %>
+            <%= link_to(session_path("current"), method: 'delete') do %>
+                <div class="itm right">Logout</div>
+            <% end %>
+            <%= link_to({controller: "users", action: "profile"}) do %>
+                <div class="itm right">Profil</div>
+            <% end %>
+            <%= link_to({controller: "pictures", action: "new"}) do %>
+                <div class="itm right">Upload</div>
+            <% end %>
+        <% else %>
+            <%= link_to(login_path) do %>
+                <div class="itm right login">Login</div>
+            <% end %>
+            <%= link_to(new_user_path) do %>
+                <div class="itm right register">Register</div>
+            <% end %>
+        <% end %>
+    </nav>
+    <main>
+        <div id="main-wrapper">
+            <%= yield %>
+        </div>
+    </main>
+  </body>
+</html>
