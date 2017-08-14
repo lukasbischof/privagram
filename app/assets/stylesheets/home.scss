@@ -14,6 +14,7 @@
     // float: left;
     // margin-left: 20px;
     overflow: hidden;
+    border-radius: 4px
 }
 
 .image-container::after {
@@ -25,10 +26,19 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
     -webkit-transition: 0.25s top;
-    transition: 0.25s top;
+    transition-duration: 0.25s;
+    transition-property: top, opacity;
     cursor: pointer;
+    opacity: 0;
+}
+
+@supports (-webkit-backdrop-filter: blur(5px)) {
+  .image-container::after {
+    -webkit-backdrop-filter: blur(3px);
+  }
 }
 
 .image-container:hover::after {
     top: 0;
+    opacity: 1;
 }

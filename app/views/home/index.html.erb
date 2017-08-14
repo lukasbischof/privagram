@@ -20,14 +20,18 @@
         <div class="image-container col-md-6"
             style="background: url(<%= "/uploads/#{p.path}" %>)"
             onclick="redirect('<%= url_for [p.user, p] %>')">
-
+            
         </div>
     <% end %>
 <% else %>
     <% @all_pictures.each do |p| %>
         <div class="image-container col-md-6"
             style="background: url(<%= "/uploads/#{p.path}" %>)"
-            onclick="redirect('<%= url_for login_path %>')">
+            onclick="redirect('<%= url_for(
+              controller: 'sessions',
+              action: 'login',
+              msg: 'Please sign in to view this image'
+            ) %>')">
 
         </div>
     <% end %>

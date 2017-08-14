@@ -2,11 +2,9 @@
 # author: Lukas Bischof
 class CommentsController < ApplicationController
   def create
-    user = User.find(params[:user_id])
-
-    picture = user.pictures.find(params[:picture_id])
+    picture = Picture.find(params[:picture_id])
     if picture.comments.create(content: comment_params[:content], user_id: params[:user_id])
-      redirect_to url_for(action: 'show', controller: 'pictures', id: params[:picture_id].to_s, user_id: params[:user_id].to_s)
+      redirect_to url_for(action: 'show', controller: 'pictures', id: params[:picture_id].to_s, user_id: picture.user.id)
     else
       redirect_to root_path
     end
@@ -18,7 +16,7 @@ class CommentsController < ApplicationController
     picture = comment.picture
     if user == current_user || picture.user == current_user
       comment.destroy
-      redirect_to get_pic_url picture.id, user.id
+      redirect_to get_pic_url picture.id, picture.user.id
     else
       redirect_to root_path
     end

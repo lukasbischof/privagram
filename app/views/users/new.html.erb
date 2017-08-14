@@ -1,44 +1,46 @@
 <% provide(:title, 'Register') %>
 
-<h1>Register</h1>
+<div class="form-container">
+  <h1>Register</h1>
 
-<%= form_for @user do |f| %>
-    <div class="error-zone">
-        <% if @user != nil && @user.errors.any? %>
-            <div id="error_explanation">
-                <h2>
-                    Please solve <%= pluralize(@user.errors.count, "error") %> to register:
-                </h2>
-                <ul>
-                    <% @user.errors.full_messages.each do |msg| %>
-                        <li><%= msg %></li>
-                    <% end %>
-                </ul>
-            </div>
-        <% end %>
-    </div>
+  <%= form_for @user do |f| %>
+      <div class="error-zone">
+          <% if @user != nil && @user.errors.any? %>
+              <div id="error_explanation">
+                  <h2>
+                      Please solve <%= pluralize(@user.errors.count, "error") %> to register:
+                  </h2>
+                  <ul>
+                      <% @user.errors.full_messages.each do |msg| %>
+                          <li><%= msg %></li>
+                      <% end %>
+                  </ul>
+              </div>
+          <% end %>
+      </div>
 
-    <p>
-        <%= f.label :username %><br />
-        <%= f.text_field :username %>
-    </p>
+      <div class="form-group">
+          <%= f.label :username %><br />
+          <%= f.text_field :username, class: 'form-control' %>
+      </div>
 
-    <p>
-        <%= f.label :email %><br />
-        <%= f.text_field :email %>
-    </p>
+      <div class="form-group">
+          <%= f.label :email %><br />
+          <%= f.text_field :email, class: 'form-control' %>
+      </div>
 
-    <p>
-        <%= f.label :password %><br />
-        <%= f.password_field :password %>
-    </p>
+      <div class="form-group">
+          <%= f.label :password %><br />
+          <%= f.password_field :password, class: 'form-control' %>
+      </div>
 
-    <p>
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation %>
-    </p>
+      <div class="form-group">
+          <%= f.label :password_confirmation %><br />
+          <%= f.password_field :password_confirmation, class: 'form-control' %>
+      </div>
 
-    <p>
-        <%= f.button :submit %>
-    </p>
-<% end %>
+      <div class="form-group">
+          <%= f.button :submit, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+</div>
