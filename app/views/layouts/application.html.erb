@@ -25,6 +25,9 @@
             <%= link_to({controller: "pictures", action: "new"}) do %>
                 <div class="itm right">Upload</div>
             <% end %>
+            <%= link_to({controller: "users", action: "mypictures", id: current_user.id}) do %>
+                <div class="itm right">My Pictures</div>
+            <% end %>
         <% else %>
             <%= link_to(login_path) do %>
                 <div class="itm right login">Login</div>

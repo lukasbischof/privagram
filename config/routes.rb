@@ -6,7 +6,10 @@ Rails.application.routes.draw do
     get 'login', to: 'sessions#login'
 
     get 'users/profile'
+    get '/users/:id/mypictures', to: 'users#mypictures'
+
     get 'pictures/new'
+
     resources :users do
         resources :pictures do
             resources :comments

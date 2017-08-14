@@ -32,4 +32,8 @@ class UsersController < ApplicationController
     def profile
         @user = current_user
     end
+
+    def mypictures
+
+    end
 end

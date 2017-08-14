@@ -6,6 +6,7 @@
 
 <br />
 
+<p>Picture from <%= @picture.user.username %>, uploaded on <%= @picture.created_at %></p>
 <div class="col-md-8">
     <div class="panel panel-primary comments-panel">
         <div class="panel-heading">
@@ -36,7 +37,7 @@
                                 </p>
                                 <p><%= c.content %></p>
                                 <p>
-                                    <% if c.user == current_user or p.user == current_user %>
+                                    <% if c.user == current_user or @picture.user == current_user %>
                                         <br />
                                         <%= link_to('Delete comment', {
                                             :action=>"destroy",

@@ -1,6 +1,6 @@
 <% provide(:title, 'Home') %>
 
-<% if current_user %>
+<!-- <% if current_user %>
     <h1>Welcome <%= current_user.username %></h1>
 
     <% current_user.pictures.each do |p| %>
@@ -12,4 +12,23 @@
     <% end %>
 <% else %>
     <h1>Welcome</h1>
+<% end %> -->
+
+
+<% if current_user %>
+    <% @all_pictures.each do |p| %>
+        <div class="image-container col-md-6"
+            style="background: url(<%= "/uploads/#{p.path}" %>)"
+            onclick="redirect('<%= url_for [p.user, p] %>')">
+
+        </div>
+    <% end %>
+<% else %>
+    <% @all_pictures.each do |p| %>
+        <div class="image-container col-md-6"
+            style="background: url(<%= "/uploads/#{p.path}" %>)"
+            onclick="redirect('<%= url_for login_path %>')">
+
+        </div>
+    <% end %>
 <% end %>
