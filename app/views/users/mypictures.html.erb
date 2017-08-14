@@ -1,9 +1,19 @@
+<% provide(:title, 'My Pictures') %>
+
 <h1>My Pictures</h1>
 
-<% current_user.pictures.each do |p| %>
-    <div class="image-container col-md-6"
-        style="background: url(<%= "/uploads/#{p.path}" %>)"
-        onclick="redirect('<%= url_for [current_user, p] %>')">
+<% if !current_user.pictures.empty? %>
+  <% current_user.pictures.each do |p| %>
+      <%= render 'image_container', p: p %>
+  <% end %>
+<% else %>
+  <div class="empty-message">
+    <p>
+      You don't have any pictures yet.
+    </p>
 
-    </div>
+    <p>
+      You can upload some <%= link_to('here', pictures_new_path) %>
+    </p>
+  </div>
 <% end %>

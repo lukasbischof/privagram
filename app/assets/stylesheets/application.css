@@ -83,3 +83,10 @@ div#main-wrapper {
     border-radius: 4px;
     margin: auto;
 }
+
+.empty-message {
+  color: gray;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 120px;
+}
