@@ -1,43 +1,50 @@
 class PicturesController < ApplicationController # :nodoc:
+  before_action :retrieve_user, only: %i[show create destroy]
+  before_action :test_is_owner, only: %i[show destroy]
+
+  def retrieve_user
+    @user = User.find(params[:user_id])
+  end
+
+  def test_is_owner
+    @is_owner = @user == current_user
+  end
+
   def new
     @picture = Picture.new
   end
 
   def show
-    user = User.find(params[:user_id])
-
-    @is_owner = user == current_user
-
-    @picture = user.pictures.find(params[:id])
+    @picture = @user.pictures.includes(:comments).find(params[:id])
 
     @votes_count = 0
-    @picture.votes.each do |vote|
-      @votes_count += vote.vote_type.to_i
-    end
+    @votes_count = @picture.count_votes
 
-    @alreadyVoted = Vote.exists?(picture_id: @picture.id,
-                                 user_id: current_user.id)
+    respond_to do |format|
+      format.html do
+        @already_voted = Vote.exists?(picture_id: @picture.id,
+                                      user_id: current_user.id)
+      end # show.html.erb
+      format.json { render json: @picture }
+    end
   end
 
   def create
-    user = User.find(params[:user_id])
-    return unless user == current_user
+    return unless @user == current_user
 
     uploaded_io = picture_params[:picture]
-    new_filename = "#{user.id}#{Time.now.to_i}_#{uploaded_io.original_filename}"
-    File.open(Rails.root.join('public', 'uploads', new_filename), 'wb') do |file|
-      file.write(uploaded_io.read)
+    p uploaded_io
+    new_filename = generate_filename(uploaded_io)
+    File.open(Rails.root.join('public', 'uploads', new_filename), 'wb') do |f|
+      f.write(uploaded_io.read)
 
-      user.pictures.create(path: new_filename)
+      @user.pictures.create(path: new_filename)
 
       redirect_to root_path
     end
   end
 
   def destroy
-    user = User.find(params[:user_id])
-
-    @is_owner = user == current_user
     p "isowner #{@is_owner}"
     if @is_owner
       picture = Picture.find(params[:id])
@@ -51,5 +58,9 @@ class PicturesController < ApplicationController # :nodoc:
 
   def picture_params
     params.require(:picture).permit(:picture)
+  end
+
+  def generate_filename(uploaded_io)
+    "#{@user.id}#{Time.now.to_i}_#{uploaded_io.original_filename}"
   end
 end

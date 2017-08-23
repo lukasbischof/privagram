@@ -1,0 +1,23 @@
+<% if comment.user != nil %>
+    <div class="panel panel-default comment-panel" id="<%= dom_id(comment) %>">
+        <div class="panel-body">
+            <p>
+                <strong><%= comment.user.username %></strong>
+                <strong> on <%= comment.created_at %>:</strong>
+            </p>
+            <p><%= comment.content %></p>
+            <p>
+                <% if comment.user == current_user or @picture.user == current_user %>
+                    <br />
+                    <%= link_to('Delete comment', {
+                        :action=>"destroy",
+                        :controller=>"comments",
+                        :id=>"#{comment.id}",
+                        :user_id=>"#{comment.user.id}",
+                        :picture_id=>"#{@picture.id}"
+                    }, class: 'btn btn-danger', method: :delete, remote: true) %>
+                <% end %>
+            </p>
+        </div>
+    </div>
+<% end %>

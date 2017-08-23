@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @successMessage = 'Successfully saved user' if @user.update(user_params)
+    @success_message = 'Successfully saved user' if @user.update(user_params)
 
     render 'profile'
   end
