@@ -1,0 +1,9 @@
+var id = "<%= dom_id(@comment) %>";
+var transitionDuration = 1000;
+var el = document.getElementById(id)
+
+el.classList.add("fade-out");
+
+setTimeout(function(){
+  el.parentElement.removeChild(el);
+}, transitionDuration);

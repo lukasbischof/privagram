@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <%= form_for [current_user, @picture, @picture.comments.build] do |f| %>
                         <%= f.label :content %>
-                        <%= f.text_area :content, class: 'form-control' %>
+                        <%= f.text_area :content, class: 'form-control', autofocus: true %>
 
                         <br />
                         <%= f.submit "Save comment", class: 'btn btn-default' %>
@@ -27,31 +27,7 @@
                 <br />
                 <h3>Other comments</h3>
 
-                <% @picture.comments.each do |c| %>
-                    <% if c.user != nil %>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <p>
-                                    <strong><%= c.user.username %></strong>
-                                    <strong> on <%= c.created_at %>:</strong>
-                                </p>
-                                <p><%= c.content %></p>
-                                <p>
-                                    <% if c.user == current_user or @picture.user == current_user %>
-                                        <br />
-                                        <%= link_to('Delete comment', {
-                                            :action=>"destroy",
-                                            :controller=>"comments",
-                                            :id=>"#{c.id}",
-                                            :user_id=>"#{c.user.id}",
-                                            :picture_id=>"#{@picture.id}"
-                                        }, class: 'btn btn-danger', method: :delete) %>
-                                    <% end %>
-                                </p>
-                            </div>
-                        </div>
-                    <% end %>
-                <% end %>
+                <%= render @picture.comments %>
             </div>
         </div>
     </div>
@@ -65,7 +41,7 @@
         <div class="panel-body">
             <div class="vote-area">
                 <%
-                    disabled_class = @alreadyVoted ? 'disabled' : ''
+                    disabled_class = @already_voted ? 'disabled' : ''
                     votes_count_class = @votes_count.negative? ? 'neg' : ''
                 %>
                 <%= link_to({
