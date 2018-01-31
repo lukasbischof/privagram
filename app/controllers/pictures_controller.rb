@@ -24,7 +24,7 @@ class PicturesController < ApplicationController # :nodoc:
       format.html do
         @already_voted = Vote.exists?(picture_id: @picture.id,
                                       user_id: current_user.id)
-      end # show.html.erb
+      end
       format.json { render json: @picture }
     end
   end
@@ -33,7 +33,6 @@ class PicturesController < ApplicationController # :nodoc:
     return unless @user == current_user
 
     uploaded_io = picture_params[:picture]
-    p uploaded_io
     new_filename = generate_filename(uploaded_io)
     File.open(Rails.root.join('public', 'uploads', new_filename), 'wb') do |f|
       f.write(uploaded_io.read)
@@ -45,7 +44,6 @@ class PicturesController < ApplicationController # :nodoc:
   end
 
   def destroy
-    p "isowner #{@is_owner}"
     if @is_owner
       picture = Picture.find(params[:id])
       picture.destroy
@@ -61,6 +59,6 @@ class PicturesController < ApplicationController # :nodoc:
   end
 
   def generate_filename(uploaded_io)
-    "#{@user.id}#{Time.now.to_i}_#{uploaded_io.original_filename}"
+    "#{@user.id}#{Time.now.to_i}_#{uploaded_io.original_filename.strip.delete(' ')}"
   end
 end

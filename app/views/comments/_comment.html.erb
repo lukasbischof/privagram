@@ -1,12 +1,12 @@
 <% if comment.user != nil %>
-    <div class="panel panel-default comment-panel" id="<%= dom_id(comment) %>">
+    <div class="panel panel-default comment-panel copyable" id="<%= dom_id(comment) %>">
         <div class="panel-body">
             <p>
-                <strong><%= comment.user.username %></strong>
-                <strong> on <%= comment.created_at %>:</strong>
+                <strong class="comment-user-username"><%= comment.user.username %></strong>
+                <strong class="comment-created-at"> on <%= comment.created_at %>:</strong>
             </p>
-            <p><%= comment.content %></p>
-            <p>
+            <p class="comment-content"><%= comment.content %></p>
+            <p class="del-button">
                 <% if comment.user == current_user or @picture.user == current_user %>
                     <br />
                     <%= link_to('Delete comment', {

@@ -1,0 +1,65 @@
+function E(a) {
+  return document.createElement(a)
+}
+
+HTMLElement.prototype.cls = function cls() {
+  if (arguments.length == 0)
+    return;
+
+  newCls = arguments[0] instanceof Array ? arguments[0] : arguments;
+  for (var i = 0; i < newCls.length; i++) {
+    this.classList.add(newCls[i]);
+  }
+
+  return this;
+};
+
+HTMLElement.prototype.add = function add(child) {
+  this.appendChild(child);
+  return this;
+};
+
+HTMLElement.prototype.href = function href(h) {
+  this.href = h;
+  return this;
+};
+
+HTMLElement.prototype.text = function(txt) {
+  this.add(document.createTextNode(txt));
+};
+
+
+
+function main() {
+  console.log("Comment was created <%= @comment.inspect %>");
+  <% has_delete_button = @comment.user == current_user or @picture.user == current_user %>
+
+  var copiedNode = cloneNode();
+  window.copiedNode = copiedNode;
+  console.log(copiedNode);
+
+  copiedNode.querySelector(".comment-user-username").text("<%= @comment.user.username %>");
+  copiedNode.querySelector(".comment-created-at").text("<%= @comment.created_at %>");
+  copiedNode.querySelector(".comment-content").text("<%= @comment.content %>");
+
+  document.querySelector("#container-comments-container-wrapping-comments").add(copiedNode);
+}
+
+function cloneNode() {
+  var copy = document.querySelector(".copyable").cloneNode(true);
+  // copy.innerHTML = document.querySelector(".copyable");
+
+  return copy;
+}
+
+<% if has_delete_button %>
+  function deleteButton() {
+    <% path = user_picture_comment_path(@comment.user.id, @picture, @comment) %>
+
+    var button = E("a")
+                 .cls("btn", "btn-default")
+                 .href("<%= path %>")
+  }
+<% end %>
+
+main();

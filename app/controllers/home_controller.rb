@@ -6,6 +6,5 @@ class HomeController < ApplicationController
         FROM votes
         WHERE votes.picture_id=pictures.id) DESC'
     @all_pictures = Picture.order(query)
-    p @all_pictures
   end
 end
